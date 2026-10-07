@@ -60,6 +60,6 @@ java {
 
 jar {
     from("LICENSE") {
-        rename "${project.archives_base_name}_${project.version}_LICENSE"
+        rename { "${it}_${project.archives_base_name}" }
     }
 }
