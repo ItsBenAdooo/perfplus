@@ -27,13 +27,13 @@ repositories {
 }
 
 dependencies {
-    // Minecraft 1.21.11 ve Mappings (Unpick hatasını çözmek için v2 takısı kaldırıldı)
+    // Minecraft 1.21.11 ve Mappings (Intermediary uyuşmazlığını çözen v2 mappings)
     minecraft "com.mojang:minecraft:1.21.11"
-    mappings "net.fabricmc:yarn:1.21.11+build.1"
-    modImplementation "net.fabricmc:fabric-loader:0.16.5"
+    mappings "net.fabricmc:yarn:1.21.11+build.1:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.16.10"
 
     // Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.6+1.21.11"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.115.0+1.21.11"
 
     // Mod Menu & Cloth Config (Harici Bağımlılıklar)
     modCompileOnly "com.terraformersmc:modmenu:17.0.1"
