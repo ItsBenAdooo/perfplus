@@ -27,14 +27,14 @@ public class EntityRenderCullingMixin {
     ) {
         MinecraftClient client = MinecraftClient.getInstance();
 
-        // Kendi karakterimizi asla gizleme (1. veya 3. şahıs kamerada görünmeli)
+        // Kendi karakterimizi asla gizleme
         if (client.player != null && entity == client.player) {
             return;
         }
 
-        // Görüş alanı (Frustum) dışındaki tüm entity ve oyuncuların çizimini iptal et
-        if (frustum != null && entity != null && entity.getVisibilityBoundingBox() != null) {
-            if (!frustum.isVisible(entity.getVisibilityBoundingBox())) {
+        // 1.21.1 için doğru bounding box kontrolü
+        if (frustum != null && entity != null && entity.getBoundingBox() != null) {
+            if (!frustum.isVisible(entity.getBoundingBox())) {
                 cir.setReturnValue(false);
             }
         }
