@@ -35,13 +35,12 @@ dependencies {
     // Fabric API
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.102.0+1.21.1"
 
-    // Mod Menu & Cloth Config (Moda dahil etme 'include' ile sağlandı)
-    modApi "com.terraformersmc:modmenu:11.0.1"
-    
-    modApi("me.shedaniel.cloth:cloth-config-fabric:15.0.127") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("me.shedaniel.cloth:cloth-config-fabric:15.0.127")
+    // Mod Menu
+    modImplementation "com.terraformersmc:modmenu:11.0.1"
+
+    // Cloth Config (Kütüphaneyi mod olarak jar içine paketleme)
+    modImplementation "me.shedaniel.cloth:cloth-config-fabric:15.0.127"
+    include "me.shedaniel.cloth:cloth-config-fabric:15.0.127"
 }
 
 processResources {
