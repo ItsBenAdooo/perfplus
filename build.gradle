@@ -27,22 +27,17 @@ repositories {
 }
 
 dependencies {
-    // Minecraft ve Mappings
-    minecraft "com.mojang:minecraft:1.21.1"
-    mappings "net.fabricmc:yarn:1.21.1+build.1:v2"
+    // Minecraft 1.21.11 ve Mappings
+    minecraft "com.mojang:minecraft:1.21.11"
+    mappings "net.fabricmc:yarn:1.21.11+build.1:v2"
     modImplementation "net.fabricmc:fabric-loader:0.16.5"
 
-    // Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.102.0+1.21.1"
+    // Fabric API (1.21.11 Uyumlu)
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.6+1.21.11"
 
-    // Mod Menu
-    modImplementation "com.terraformersmc:modmenu:11.0.1"
-
-    // Cloth Config (Güncellenmiş Uyumlu Sürüm)
-    modApi("me.shedaniel.cloth:cloth-config-fabric:15.0.130") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-    include("me.shedaniel.cloth:cloth-config-fabric:15.0.130")
+    // Mod Menu & Cloth Config
+    modCompileOnly "com.terraformersmc:modmenu:17.0.1"
+    modCompileOnly "me.shedaniel.cloth:cloth-config-fabric:15.0.127"
 }
 
 processResources {
