@@ -20,6 +20,7 @@ public class ModConfig {
 
     // Ayar Değişkenleri
     public static boolean enabled = true;
+    public static boolean checkWallOcclusion = true; // Duvar arkası culling ayarı
     public static int maxRenderDistance = 64;
 
     // Ayarları dosyadan oku
@@ -33,6 +34,7 @@ public class ModConfig {
             ConfigData data = GSON.fromJson(reader, ConfigData.class);
             if (data != null) {
                 enabled = data.enabled;
+                checkWallOcclusion = data.checkWallOcclusion;
                 maxRenderDistance = data.maxRenderDistance;
             }
         } catch (IOException e) {
@@ -45,6 +47,7 @@ public class ModConfig {
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
             ConfigData data = new ConfigData();
             data.enabled = enabled;
+            data.checkWallOcclusion = checkWallOcclusion;
             data.maxRenderDistance = maxRenderDistance;
             GSON.toJson(data, writer);
         } catch (IOException e) {
@@ -52,9 +55,9 @@ public class ModConfig {
         }
     }
 
-    // JSON verilerini tutan iç sınıf
     private static class ConfigData {
         boolean enabled = true;
+        boolean checkWallOcclusion = true;
         int maxRenderDistance = 64;
     }
 }
