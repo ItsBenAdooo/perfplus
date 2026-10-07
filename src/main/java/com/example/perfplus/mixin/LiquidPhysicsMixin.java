@@ -16,24 +16,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LiquidPhysicsMixin {
 
     @Inject(
-        method = "flow", 
+        method = "tryFlow", 
         at = @At("HEAD"), 
         cancellable = true
     )
     private void perfplus$optimizeFluidFlow(
         WorldAccess world, 
         BlockPos pos, 
-        BlockState state, 
-        Direction direction, 
-        FluidState fluidState, 
+        FluidState state, 
         CallbackInfo ci
     ) {
-        // Hedef blok konumu
-        BlockPos targetPos = pos.offset(direction);
-
-        // Çevredeki blok tam dolu / opak bir bloksa gereksiz sıvı hesaplamasını atla
-        BlockState targetState = world.getBlockState(targetPos);
-        if (targetState.isOpaque()) {
+        // Sıvının bulunduğu hedef blok hava veya akmaya uygun değilse ekstra hesaplamayı atla
+        BlockState currentState = world.getBlockState(pos);
+        if (currentState.isOpaque()) {
             ci.cancel();
         }
     }
