@@ -26,6 +26,13 @@ public class ModMenuIntegration implements ModMenuApi {
                     .setSaveConsumer(newValue -> ModConfig.enabled = newValue)
                     .build());
 
+            // Duvar Arkası Culling Toggle
+            general.addEntry(entryBuilder.startBooleanToggle(Text.literal("Duvar Arkası Culling"), ModConfig.checkWallOcclusion)
+                    .setDefaultValue(true)
+                    .setTooltip(Text.literal("Duvar veya blok arkasında kalan (görünmeyen) varlıkları gizler."))
+                    .setSaveConsumer(newValue -> ModConfig.checkWallOcclusion = newValue)
+                    .build());
+
             // Maksimum Render Mesafesi Slider
             general.addEntry(entryBuilder.startIntSlider(Text.literal("Maksimum Culling Mesafesi (Blok)"), ModConfig.maxRenderDistance, 16, 128)
                     .setDefaultValue(64)
