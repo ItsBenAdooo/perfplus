@@ -7,9 +7,6 @@
     "EntityRenderCullingMixin",
     "PlayerRenderCullingMixin"
   ],
-  "mixins": [
-    "LiquidPhysicsMixin"
-  ],
   "injectors": {
     "defaultRequire": 1
   }
