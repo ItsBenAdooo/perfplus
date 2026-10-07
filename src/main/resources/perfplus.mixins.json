@@ -4,8 +4,7 @@
   "package": "com.example.perfplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "EntityRenderCullingMixin",
-    "PlayerRenderCullingMixin"
+    "EntityRenderCullingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
