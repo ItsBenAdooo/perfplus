@@ -1,9 +1,13 @@
 package com.example.perfplus.mixin;
 
+import com.example.perfplus.config.ModConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
+import net.minecraft.world.RaycastContext;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,16 +29,45 @@ public class EntityRenderCullingMixin {
         double z, 
         CallbackInfoReturnable<Boolean> cir
     ) {
-        MinecraftClient client = MinecraftClient.getInstance();
-
-        // Kendi karakterimizi asla gizleme
-        if (client.player != null && entity == client.player) {
+        if (!ModConfig.enabled) {
             return;
         }
 
-        // Kamera görüş açısının (Frustum) dışındakileri çizmeyi iptal et
-        if (frustum != null && entity != null && entity.getBoundingBox() != null) {
+        MinecraftClient client = MinecraftClient.getInstance();
+
+        if (client.player == null || entity == client.player) {
+            return;
+        }
+
+        // 1. Mesafe Kontrolü
+        if (client.player.squaredDistanceTo(entity) > (ModConfig.maxRenderDistance * ModConfig.maxRenderDistance)) {
+            cir.setReturnValue(false);
+            return;
+        }
+
+        // 2. Frustum (Görüş Açısı) Kontrolü
+        if (frustum != null && entity.getBoundingBox() != null) {
             if (!frustum.isVisible(entity.getBoundingBox())) {
+                cir.setReturnValue(false);
+                return;
+            }
+        }
+
+        // 3. Duvar Arkası (Occlusion / Görüş Hattı) Kontrolü
+        if (ModConfig.checkWallOcclusion && client.world != null) {
+            Vec3d cameraPos = client.gameRenderer.getCamera().getPos();
+            Vec3d entityPos = entity.getEyePos();
+
+            HitResult hitResult = client.world.raycast(new RaycastContext(
+                cameraPos,
+                entityPos,
+                RaycastContext.ShapeType.COLLIDER,
+                RaycastContext.FluidHandling.NONE,
+                client.player
+            ));
+
+            // Oyuncu ile Entity arasında saydam olmayan bir blok varsa çizimi engelle
+            if (hitResult.getType() == HitResult.Type.BLOCK) {
                 cir.setReturnValue(false);
             }
         }
