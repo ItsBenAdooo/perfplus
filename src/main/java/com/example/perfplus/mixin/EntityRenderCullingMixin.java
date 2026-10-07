@@ -4,8 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,11 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderCullingMixin {
 
-    // 64 Blok mesafe sınırı (64 * 64 = 4096)
-    private static final double MAX_CULL_DISTANCE_SQ = 64.0 * 64.0;
-
-    @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
-    private <E extends Entity> void perfplus$advancedEntityCulling(
+    @Inject(
+        method = "shouldRender", 
+        at = @At("HEAD"), 
+        cancellable = true
+    )
+    private <E extends Entity> void perfplus$cullRender(
         E entity, 
         Frustum frustum, 
         double x, 
@@ -28,21 +27,14 @@ public class EntityRenderCullingMixin {
     ) {
         MinecraftClient client = MinecraftClient.getInstance();
 
-        // Oyuncunun kendisini render culling dışı bırak
-        if (entity == client.player) {
+        // Kendi karakterimizi asla gizleme (1. veya 3. şahıs kamerada görünmeli)
+        if (client.player != null && entity == client.player) {
             return;
         }
 
-        // 1. Görüş Alanı (Frustum) Kontrolü: Kamera açısında değilse çizmeyi iptal et
-        if (!frustum.isVisible(entity.getVisibilityBoundingBox())) {
-            cir.setReturnValue(false);
-            return;
-        }
-
-        // 2. Mesafe Kontrolü: 64 bloktan uzak Mob ve Armor Stand'leri çizme
-        if (entity instanceof MobEntity || entity instanceof ArmorStandEntity) {
-            double distanceSq = entity.squaredDistanceTo(x, y, z);
-            if (distanceSq > MAX_CULL_DISTANCE_SQ) {
+        // Görüş alanı (Frustum) dışındaki tüm entity ve oyuncuların çizimini iptal et
+        if (frustum != null && entity != null && entity.getVisibilityBoundingBox() != null) {
+            if (!frustum.isVisible(entity.getVisibilityBoundingBox())) {
                 cir.setReturnValue(false);
             }
         }
