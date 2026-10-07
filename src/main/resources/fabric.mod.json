@@ -2,23 +2,29 @@
   "schemaVersion": 1,
   "id": "perfplus",
   "version": "${version}",
-  "name": "Performance Plus",
-  "description": "Improves performance via entity culling, player culling, and optimized liquid physics.",
-  "authors": ["Developer"],
+  "name": "PerfPlus",
+  "description": "Entity Culling ve Performans Optimizasyon Modu",
+  "authors": [
+    "Developer"
+  ],
   "contact": {},
   "license": "MIT",
+  "icon": "assets/perfplus/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.perfplus.PerfPlusMod"
+      "com.example.perfplus.PerfPlus"
+    ],
+    "modmenu": [
+      "com.example.perfplus.config.ModMenuIntegration"
     ]
   },
   "mixins": [
     "perfplus.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.15.0",
-    "minecraft": "~1.21",
+    "fabricloader": ">=0.16.5",
+    "minecraft": "~1.21.1",
     "java": ">=21"
   }
 }
