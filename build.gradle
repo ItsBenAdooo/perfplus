@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9.2'
+    id 'fabric-loom' version '1.10.1'
     id 'maven-publish'
 }
 
@@ -13,19 +13,16 @@ base {
 repositories {
     mavenCentral()
 
-    // Fabric Repository
     maven {
         name = "Fabric"
         url = "https://maven.fabricmc.net/"
     }
 
-    // Mod Menu Repository
     maven {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/releases/"
     }
 
-    // Cloth Config Repository
     maven {
         name = "Shedaniel Maven"
         url = "https://maven.shedaniel.me/"
@@ -33,16 +30,14 @@ repositories {
 }
 
 dependencies {
-    // Minecraft 1.21.11 ve Mojang Mappings
+    // Minecraft 1.21.11 ve Mappings
     minecraft "com.mojang:minecraft:1.21.11"
-    mappings loom.officialMojangMappings()
+    mappings "net.fabricmc:yarn:1.21.11+build.1:v2"
 
     modImplementation "net.fabricmc:fabric-loader:0.16.10"
-
-    // Fabric API (1.21.x Uyumlu Geçerli Sürüm)
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.115.0+1.21.4"
 
-    // Mod Menu & Cloth Config (Harici Bağımlılıklar)
+    // Harici Bağımlılıklar
     modCompileOnly "com.terraformersmc:modmenu:17.0.1"
     modCompileOnly "me.shedaniel.cloth:cloth-config-fabric:15.0.127"
 }
