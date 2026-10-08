@@ -13,6 +13,12 @@ base {
 repositories {
     mavenCentral()
 
+    // Fabric Repository
+    maven {
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
+    }
+
     // Mod Menu Repository
     maven {
         name = "TerraformersMC"
@@ -27,16 +33,14 @@ repositories {
 }
 
 dependencies {
-    // Minecraft 1.21.11
+    // Minecraft 1.21.11 ve Mojang Mappings
     minecraft "com.mojang:minecraft:1.21.11"
-    
-    // Unpick & Javadoc çakışmasını önleyen resmi intermediary + yarn eşleşmesi
     mappings loom.officialMojangMappings()
-    
+
     modImplementation "net.fabricmc:fabric-loader:0.16.10"
 
-    // Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.115.0+1.21.11"
+    // Fabric API (1.21.x Uyumlu Geçerli Sürüm)
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.115.0+1.21.4"
 
     // Mod Menu & Cloth Config (Harici Bağımlılıklar)
     modCompileOnly "com.terraformersmc:modmenu:17.0.1"
